@@ -1,6 +1,6 @@
 """
-Utilizes an AI chat model from langchain_openai to answer any provided question with API key sourced from environment variables.
-Chat without memory.
+Basic LLM-based Q&A system with a static prompt.
+Just a direct query-response system.
 Author: tdiprima
 """
 from langchain_openai import ChatOpenAI

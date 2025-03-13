@@ -40,4 +40,4 @@ agent = initialize_agent(
 )
 
 # Use it
-print(agent.invoke({"input": "What is 2 plus 7?"})["output"]
+print(agent.invoke({"input": "What is 2 plus 7?"})["output"])

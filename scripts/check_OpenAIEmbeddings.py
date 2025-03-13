@@ -1,9 +1,12 @@
 """
-Initializes OpenAI embeddings and a FAISS vector database using a series of documents.
+Initializes OpenAI Embeddings and FAISS vector store.
+Stores documents in FAISS but does not retrieve or process them dynamically.
 Author: tdiprima
 """
 import os
 from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores.faiss import FAISS
+from langchain_core.documents import Document
 
 api_key = os.getenv("OPENAI_API_KEY")  # Returns None if not set
 
@@ -16,9 +19,6 @@ try:
     print("Embeddings initialized successfully!")
 except Exception as e:
     print(f"Error initializing OpenAIEmbeddings: {e}")
-
-from langchain_community.vectorstores.faiss import FAISS
-from langchain_core.documents import Document
 
 documents = [
     Document(page_content="The nuclear codes are hidden in the vault."),

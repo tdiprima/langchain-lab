@@ -1,9 +1,10 @@
 """
-Agentic RAG - has agentic reasoning and external tool use.
-
+Agentic RAG example
+Uses a retriever tool to fetch intelligence data.
+Calls an external API tool to get real-time "spy network" updates.
+Dynamically reasons over the retrieved information before responding.
 Author: tdiprima
 """
-
 import os
 from langchain.agents import initialize_agent
 from langchain_openai import ChatOpenAI

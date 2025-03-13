@@ -1,6 +1,6 @@
 """
-Initializes a conversational language model using the OpenAI API and manages user interactions with the AI,
-including the retrieval and creation of session history.
+Uses LangChain's memory to maintain chat history.
+Implements a conversational AI that persists history across sessions.
 Author: tdiprima
 """
 from langchain_openai import ChatOpenAI

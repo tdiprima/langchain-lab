@@ -1,7 +1,7 @@
 """
-Basic RAG system - a fun little program that retrieves "intelligence-related"
-documents from a FAISS vector store and generates responses using OpenAI's GPT-4
-
+Basic RAG example
+Implements retrieval-augmented generation (RAG) using OpenAI embeddings and FAISS.
+Retrieves relevant documents and generates responses.
 Author: tdiprima
 """
 import os
