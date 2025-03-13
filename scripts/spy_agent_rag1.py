@@ -1,7 +1,7 @@
 """
 Agentic RAG - has agentic reasoning and external tool use.
 
-author:tdiprima
+Author: tdiprima
 """
 
 import os
@@ -19,7 +19,7 @@ if api_key is None:
     raise ValueError("OpenAI API key is not set. Please set the OPENAI_API_KEY environment variable.")
 
 # Initialize LLM with reasoning capability
-llm = ChatOpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=api_key)
+llm = ChatOpenAI(model_name="gpt-4", temperature=0.7, api_key=api_key)
 
 # Create vector database with sample documents
 documents = [
@@ -27,7 +27,7 @@ documents = [
     Document(page_content="Agent X was last seen in Paris."),
     Document(page_content="The formula for the secret serum is stored on a secure server."),
 ]
-embeddings = OpenAIEmbeddings(openai_api_key=api_key, model="text-embedding-ada-002")
+embeddings = OpenAIEmbeddings(api_key=api_key, model="text-embedding-ada-002")
 vector_db = FAISS.from_documents(documents, embeddings)
 retriever = vector_db.as_retriever()
 

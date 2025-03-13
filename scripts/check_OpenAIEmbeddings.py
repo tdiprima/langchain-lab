@@ -1,3 +1,7 @@
+"""
+Initializes OpenAI embeddings and a FAISS vector database using a series of documents.
+Author: tdiprima
+"""
 import os
 from langchain_openai import OpenAIEmbeddings
 
@@ -5,7 +9,7 @@ api_key = os.getenv("OPENAI_API_KEY")  # Returns None if not set
 
 try:
     embeddings = OpenAIEmbeddings(
-        openai_api_key=api_key,
+        api_key=api_key,
         model="text-embedding-ada-002",
         max_retries=5
     )

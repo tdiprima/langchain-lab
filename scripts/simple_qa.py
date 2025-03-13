@@ -1,5 +1,7 @@
 """
-simpler version without memory
+Utilizes an AI chat model from langchain_openai to answer any provided question with API key sourced from environment variables.
+Chat without memory.
+Author: tdiprima
 """
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate

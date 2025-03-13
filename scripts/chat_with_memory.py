@@ -1,3 +1,8 @@
+"""
+Initializes a conversational language model using the OpenAI API and manages user interactions with the AI,
+including the retrieval and creation of session history.
+Author: tdiprima
+"""
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory

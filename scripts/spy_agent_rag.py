@@ -1,8 +1,8 @@
 """
-Basic RAG system that retrieves intelligence-related documents from a
-FAISS vector store and generates responses using OpenAI's GPT-4
+Basic RAG system - a fun little program that retrieves "intelligence-related"
+documents from a FAISS vector store and generates responses using OpenAI's GPT-4
 
-author: tdiprima
+Author: tdiprima
 """
 import os
 
@@ -17,7 +17,7 @@ api_key = os.getenv("OPENAI_API_KEY")  # Returns None if not set
 if api_key is None:
     raise ValueError("OpenAI API key is not set. Please set the OPENAI_API_KEY environment variable.")
 
-llm = ChatOpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=api_key)
+llm = ChatOpenAI(model_name="gpt-4", temperature=0.7, api_key=api_key)
 
 # Define some documents (like classified files)
 documents = [Document(page_content="The nuclear codes are hidden in the vault."),
@@ -27,7 +27,7 @@ documents = [Document(page_content="The nuclear codes are hidden in the vault.")
 # Convert text into vector embeddings
 # Initialize embeddings with retry parameters to handle newer SDK correctly
 embeddings = OpenAIEmbeddings(
-    openai_api_key=api_key,
+    api_key=api_key,
     model="text-embedding-ada-002",
     max_retries=5
 )
