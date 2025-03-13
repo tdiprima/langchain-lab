@@ -3,9 +3,8 @@ A Minimal "Calculator" Tool Using LangGraph
 Converted from LangChain example by tdiprima
 """
 from langgraph.graph import StateGraph, END
-from typing import TypedDict, Annotated
+from typing import TypedDict
 from langchain_openai import OpenAI
-import operator
 
 
 # Define the state that will be maintained throughout the graph
@@ -30,7 +29,7 @@ def tool_node(state: AgentState) -> AgentState:
     # In a more complex scenario, you might use an LLM to parse this
     words = state["input"].lower().replace("what is", "").replace("plus", "").replace("?", "").strip()
     result = add_numbers(words)
-    return {"output": result}
+    return {"input": "", "output": result}
 
 
 # Initialize the LLM (same as original)

@@ -92,8 +92,4 @@ LangChain is **powerful but not magic**. If you're building something complex, i
 
 **Con:** ⚠️ **Fast-changing & hard to keep up**—breaking changes and evolving APIs can make maintenance a headache.  This is the biggest one that I ran into.  Also, the framework adds extra layers of abstraction, which can introduce latency.
 
-**Joe:** Same here. But for people starting out it does include some heavy lifting tools for the rag portion and you can switch LLM without a lot of retooling.
-
-I started with langchain when we first worked on CENTSBot and once I started doing the calls directly to the endpoints myself it improved the speed.
-
 <br>
