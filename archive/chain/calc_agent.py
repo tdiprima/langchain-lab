@@ -27,10 +27,6 @@ tools = [
 # An LLM to power the agent
 llm = OpenAI(temperature=0)
 
-# Note: Consider migrating to LangGraph for new projects as it offers more flexibility
-# and features including tool-calling, state persistence, and human-in-the-loop workflows.
-# See: https://langchain-ai.github.io/langgraph/
-
 # Build the agent
 agent = initialize_agent(
     tools=tools,
