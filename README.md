@@ -1,4 +1,4 @@
-# LangChain Tutorial (v0.3.20) – ADHD-Friendly Guide 🎉
+# LangChain Tutorial (v0.3.20)  🎉
 
 LangChain is a framework that helps you build powerful applications with large language models (LLMs). It provides **core components** like Chains, Memory, Agents, Tools, and integrated Models to make LLMs more effective. Using an LLM by itself is cool, but the real power comes when you combine it with other sources of computation or knowledge ([langchain · PyPI](https://pypi.org/project/langchain/#:~:text=Large%20language%20models%20,sources%20of%20computation%20or%20knowledge)). LangChain makes that easier by giving you building blocks to structure prompts, remember context, call external APIs, and more.
 
