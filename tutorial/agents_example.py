@@ -4,6 +4,7 @@ from langchain_openai import OpenAI
 
 # Initialize the LLM for the agent (we'll use the same OpenAI GPT-3 model)
 llm = OpenAI(temperature=0)
+print("Model:", llm.model_name)
 
 # Load the tools the agent can use. We'll give it a calculator tool (LLM math).
 tools = load_tools(["llm-math"], llm=llm)
