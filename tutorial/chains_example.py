@@ -1,6 +1,5 @@
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import OpenAI
-from langchain.schema.runnable import RunnableLambda
 
 # Create a prompt template. This is the blueprint of the prompt the LLM will see.
 template = "You are a friendly assistant. Respond to the user by name.\nUser: {user_input}\nAssistant:"
