@@ -111,3 +111,11 @@ if __name__ == "__main__":
         print("Analysis:", result["task_status"]["analysis"])
         if "solution" in result["task_status"]:
             print("\nSolution:", result["task_status"]["solution"])
+
+"""
+Ideas:
+Build a simple web application
+Design a user authentication system
+Create a data visualization dashboard
+Implement a REST API for a blog
+"""

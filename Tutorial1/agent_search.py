@@ -18,5 +18,5 @@ llm = ChatOpenAI(model="gpt-3.5-turbo")
 agent = initialize_agent(tools, llm, agent_type="zero-shot-react-description")
 
 # Step 3: Ask it something
-response = agent.run("Tell me about cats!")
-print(response)  # Cats are both interesting and awesome animals!
+response = agent.invoke({"input": "Tell me about cats!"})
+print(response['output'])  # Cats are both interesting and awesome animals!

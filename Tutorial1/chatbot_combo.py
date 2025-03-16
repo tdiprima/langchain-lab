@@ -21,6 +21,7 @@ def whisper(text: str):
     """Whispers your text"""
     return text.lower() + "..."
 
+
 # Create a list of tools
 tools = [shout, whisper]
 

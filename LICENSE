@@ -1,4 +1,6 @@
-MIT License
+MIT License (Modified)
+
+This is a modified version of the standard MIT License. It includes an additional requirement for attribution in the README file. See below for details.
 
 Copyright (c) 2025 Tammy DiPrima
 
@@ -11,6 +13,12 @@ furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
+
+**In addition, any distributed or publicly accessible derivative work must
+include a clear attribution to the original author in a "Credits" or "Acknowledgments" 
+section of the project's README file (or equivalent documentation). 
+The attribution must include the author's name and a link to the original project repository 
+(if available).**
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
