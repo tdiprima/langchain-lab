@@ -1,4 +1,4 @@
-### Here's a super-clear breakdown of how I built the script! 🚀
+### Here's a super-clear breakdown of how the script was built! 🚀
 
 1. The Core Idea 🎯
   - Built a task processor that can analyze ANY task you give it
