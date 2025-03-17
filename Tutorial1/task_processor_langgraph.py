@@ -3,6 +3,7 @@ A simple LangGraph example that demonstrates state management and flow control.
 Demonstrates a task processing workflow with state management.
 Type your task and the system will analyze it and provide both an analysis and
 a detailed solution. Type 'quit' when you want to exit.
+Author: tdiprima
 """
 from typing import TypedDict, Annotated, Sequence
 from langchain_openai import ChatOpenAI

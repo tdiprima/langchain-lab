@@ -1,19 +1,17 @@
 """
 Chains: Greeting Chain
-Builds a simple chain to greet someone funnily.
+Builds a simple chain to greet someone.
+Author: tdiprima
 """
-from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
+from langchain_core.prompts import PromptTemplate
 
-# Build a prompt (the instruction)
-prompt = PromptTemplate.from_template("Say hello to {name} in a fun way!")
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.8)
 
-# Pick an AI model (our worker)
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.7)
+prompt = PromptTemplate.from_template("You are a cheerful assistant.  Say hello to {name}")
 
-# Snap them together into a chain
 chain = prompt | llm
 
-# Run it!
 response = chain.invoke({"name": "Bear"})
-print(response.content)  # Hey there, Bear! Ready for some roaring good times?
+
+print(response.content)  # Hello, Bear! 🌟 It's so nice to meet you! How are you doing today?

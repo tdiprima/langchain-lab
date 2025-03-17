@@ -1,3 +1,9 @@
+"""
+An AI-powered web search agent using LangChain and OpenAI. 
+Integrates TavilySearch for retrieving online results and 
+executes search queries via a chatbot interface.
+Author: tdiprima
+"""
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain.agents import AgentExecutor, create_openai_functions_agent
 from langchain_openai import ChatOpenAI

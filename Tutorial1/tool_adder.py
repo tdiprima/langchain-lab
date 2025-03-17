@@ -4,6 +4,7 @@ It successfully demonstrates:
 - Tool usage with the add_numbers function
 - State management with TypedDict
 - Proper message handling and conversation flow
+Author: tdiprima
 """
 from langgraph.graph import StateGraph, END
 from langchain_core.tools import tool

@@ -1,22 +1,27 @@
 """
 Memory: Chat with Memory
 Shows how to make an AI remember your name or preferences.
+Author: tdiprima
 """
-from langchain_core.messages import HumanMessage
-from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_openai import ChatOpenAI
+from langchain.memory import ConversationBufferMemory
+from langchain.chains import ConversationChain
 
-# Create a memory bank
-memory = ChatMessageHistory()
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
 
-# Add some convo
-memory.add_user_message("Hi, I'm Bear!")
-memory.add_ai_message("Hey Bear, nice to meet you!")
+memory = ConversationBufferMemory()
 
-# Set up the AI
-llm = ChatOpenAI(model="gpt-3.5-turbo")
+chain = ConversationChain(
+    llm=llm,
+    memory=memory
+)
 
-# Ask it something with memory
-messages = memory.messages + [HumanMessage("What's my name?")]
-response = llm.invoke(messages)
-print(response.content)  # Your name is Bear!
+while True:
+    user_input = input("User: ")
+    
+    if user_input == "quit":
+        break
+    
+    response = chain.invoke({"input": user_input})
+    
+    print("Assistant:", response["response"])

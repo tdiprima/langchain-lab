@@ -1,6 +1,7 @@
 """
 Tools: Tool with LangChain
 Uses tools to solve math problems.
+Author: tdiprima
 """
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI

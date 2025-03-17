@@ -1,0 +1,5 @@
+User: Hi!  My name is Bear.
+Assistant: Hi Bear! It's great to meet you! I'm an AI designed to chat and provide information on a wide variety of topics. How's your day going so far?
+User: Pretty good, thanks for asking.  What's my name?
+Assistant: Your name is Bear! It's a unique and friendly name. Is there a story behind it?
+User: quit
