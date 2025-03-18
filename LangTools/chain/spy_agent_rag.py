@@ -9,6 +9,7 @@ import os
 from langchain.chains import RetrievalQA
 from langchain_openai import ChatOpenAI
 from langchain_core.documents.base import Document
+# from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores.faiss import FAISS
 
@@ -20,18 +21,29 @@ if api_key is None:
 llm = ChatOpenAI(model_name="gpt-4", temperature=0.7, api_key=api_key)
 
 # Define some documents (like classified files)
-documents = [Document(page_content="The nuclear codes are hidden in the vault."),
-             Document(page_content="Agent X was last seen in Paris."),
-             Document(page_content="The formula for the secret serum is stored on a secure server.")]
+documents = [
+    Document(page_content="The nuclear codes are hidden in the vault."),
+    Document(page_content="Agent X was last seen in Paris."),
+    Document(page_content="The formula for the secret serum is stored on a secure server.")
+]
 
 # Convert text into vector embeddings
 # Initialize embeddings with retry parameters to handle newer SDK correctly
-embeddings = OpenAIEmbeddings(
-    api_key=api_key,
-    model="text-embedding-ada-002",
-    max_retries=5
-)
-vector_db = FAISS.from_documents(documents, embeddings)
+try:
+    embeddings = OpenAIEmbeddings(
+        api_key=api_key,
+        model="text-embedding-ada-002",
+        max_retries=5
+    )
+    print("Embeddings initialized successfully!")
+except Exception as e:
+    print(f"Error initializing OpenAIEmbeddings: {e}")
+
+try:
+    vector_db = FAISS.from_documents(documents, embeddings)
+    print("FAISS database initialized successfully!")
+except Exception as e:
+    print(f"Error initializing FAISS: {e}")
 
 retriever = vector_db.as_retriever()
 
