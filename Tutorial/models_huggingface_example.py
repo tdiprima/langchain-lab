@@ -6,7 +6,7 @@ from langchain_community.llms import HuggingFaceHub
 import os
 
 # Set your Hugging Face API token
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = "YOUR-HUGGINGFACE-API-TOKEN-HERE"
 
 # Initialize the Hugging Face model
 # Using google/flan-t5-small as an example - it's a smaller, faster model
