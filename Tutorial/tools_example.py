@@ -1,3 +1,7 @@
+"""
+AI Agent that uses tools to answer questions
+Author: tdiprima
+"""
 import warnings
 
 warnings.filterwarnings("ignore")  # Suppress warnings for cleaner output
@@ -23,7 +27,7 @@ tools = [
     )
 ]
 
-# Initialize the LLM (ensure you have an OpenAI API key set in your environment)
+# Initialize the LLM
 llm = OpenAI(temperature=0)
 
 # Initialize the agent

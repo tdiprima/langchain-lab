@@ -1,8 +1,8 @@
-# LangChain Tutorial (v0.3.20)  🎉
+# LangChain Tutorial  🎉
 
 LangChain is a framework that helps you build powerful applications with large language models (LLMs). It provides **core components** like Chains, Memory, Agents, Tools, and integrated Models to make LLMs more effective. Using an LLM by itself is cool, but the real power comes when you combine it with other sources of computation or knowledge ([langchain · PyPI](https://pypi.org/project/langchain/#:~:text=Large%20language%20models%20,sources%20of%20computation%20or%20knowledge)). LangChain makes that easier by giving you building blocks to structure prompts, remember context, call external APIs, and more.
 
-**In this tutorial**, we'll cover the core concepts of LangChain **version 0.3.20** in a beginner-friendly way. We'll use short explanations (great for ADHD minds!), bullet points, and fully runnable Python examples. By the end, you'll know how to:
+**In this tutorial**, we'll cover the core concepts of LangChain **version 0.3.20** in a beginner-friendly way. We'll use short explanations, bullet points, and fully runnable Python examples. By the end, you'll know how to:
 
 - **Install and set up LangChain** on your system.
 - Use **Chains** to create sequences of calls (like prompts to an LLM).
@@ -166,19 +166,20 @@ Notice that the assistant remembers the name **Sam** from the earlier interactio
 
 You can keep calling `conversation.predict(input=...)` and the memory will keep growing with the conversation. This is the basis for building stateful chatbots or assistants using LangChain.
 
-*📝 ADHD tip: Think of memory like a chat transcript that gets prepended to each new question. It helps the AI not to forget things mentioned earlier.* 
+*📝 Tip: Think of memory like a chat transcript that gets prepended to each new question. It helps the AI not to forget things mentioned earlier.* 
 
 ## 3. Agents
 
-**What is an Agent?** An *Agent* is a powerful concept in LangChain where an LLM is not just generating a direct answer, but instead **deciding a sequence of actions** to take based on the user's requ ([Agents | LangChain](https://python.langchain.com/v0.1/docs/modules/agents/#:~:text=The%20core%20idea%20of%20agents,take%20and%20in%20which%20order)). An agent can choose from a set of Tools (functions or actions) to help answer a question or fulfill a task. It uses the LLM as a reasoning engine to figure out *which* tool to use, *what* input to give that tool, and *when* to stop and return an answer.
+**What is an Agent?** An *Agent* is a powerful concept in LangChain where an LLM is not just generating a direct answer, but instead **deciding a sequence of actions** to take based on the user's request ([Agents | LangChain](https://python.langchain.com/v0.1/docs/modules/agents/#:~:text=The%20core%20idea%20of%20agents,take%20and%20in%20which%20order)). An agent can choose from a set of Tools (functions or actions) to help answer a question or fulfill a task. It uses the LLM as a reasoning engine to figure out *which* tool to use, *what* input to give that tool, and *when* to stop and return an answer.
 
 In simpler terms, **an agent = LLM + decision-making + tools.** The agent will dynamically determine the steps. This is different from a Chain where the steps are fixed in code. Use an agent when you want the AI to handle more open-ended problems that might involve multiple steps or external actions (e.g. searching the web, doing math, looking up info).
 
 Key points about Agents:
+
 - Agents have access to one or more Tools (we'll explain Tools next). For example, a calculator, a search engine, a database, etc.
 - On each turn, the agent (the LLM behind it) receives the user question plus a list of available tools and decides:
-  1. Should I use a tool? If yes, which one and with what input?
-  2. Or, have I gathered enough info and I should answer now?
+    1. Should I use a tool? If yes, which one and with what input?
+    2. Or, have I gathered enough info and I should answer now?
 - The agent's reasoning is often based on a prompt (LangChain uses a ReAct framework prompt by default) which encourages the model to think step-by-step (sometimes you'll see it output "Thought: ... Action: ..." behind the scenes).
 - **When to use**: If your task might require looking up information or performing intermediate calculations, agents are great. If the task is straightforward and one-step (just text in -> text out), a chain might suffice.
 
@@ -224,14 +225,13 @@ When you run this, the console output will show the **agent's reasoning steps** 
 
 ```
 > Entering new AgentExecutor chain...
- I need to calculate 2^5 / 7.
-Thought: This is a math problem. I should use the calculator tool.
-Action: **Calculator** 
-Action Input: 2**5 / 7
-
-Observation: 4.571428571428571
-Thought: The result is 4.571428571428571. This is the final answer.
+ I should use a calculator to solve this problem.
+Action: Calculator
+Action Input: 2 ** 5 / 7
+Observation: Answer: 4.571428571428571
+Thought: I now know the final answer.
 Final Answer: 4.571428571428571
+
 > Finished chain.
 Final Answer: 4.571428571428571
 ```
@@ -304,21 +304,22 @@ When we run the agent on the question *"What time is it right now?"*, here's wha
 
 - The agent thinks *"I don't know the time, but I have a tool for that."*
 - It chooses the **Current Time** tool, calls `get_current_time()` (via `func`).
-- The tool returns (say) `"15:42:10"`.
-- The agent then uses that to formulate the final answer, e.g. *"It's currently 15:42:10."*
+- The tool returns (say) `"12:48:50"`.
+- The agent then uses that to formulate the final answer, e.g. *"It's currently 12:48:50."*
 
 The console (with verbose=True) will show something like:
 
 ```
 > Entering new AgentExecutor chain...
-Thought: The user asks for the current time. I have a tool for this.
+ I should use the Current Time tool to get the current time
 Action: Current Time
-Action Input: (none needed)
-Observation: 15:42:10
-Thought: I got the current time, now I can answer.
-Final Answer: It is 15:42:10 now.
+Action Input: None
+Observation: 12:48:50
+Thought: I now know the final answer
+Final Answer: The current time is 12:48:50.
+
 > Finished chain.
-Agent's answer: It is 15:42:10 now.
+Agent's answer: The current time is 12:48:50.
 ```
 
 This demonstrates how to integrate external information via tools. You could similarly wrap an API call (e.g., a weather API) in a function and make it a tool. Then the agent could answer questions like "What's the weather in Paris?" by calling that tool.
