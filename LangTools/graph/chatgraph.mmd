@@ -1,0 +1,8 @@
+graph TD
+    A[Start] -->|Entry Point| B(receive_input)
+    B -->|Grabs message| C(route)
+    C -->|Classifies intent| D{qa or chitchat?}
+    D -->|qa| E(qa)
+    D -->|chitchat| F(chitchat)
+    E -->|Answer| G[END]
+    F -->|Witty reply| G[END]
