@@ -5,9 +5,9 @@ from langchain_core.runnables import RunnableLambda
 
 
 class State(TypedDict, total=False):
-    history: List[dict]
-    intent: str
-    response: str
+    history: List[dict]   # list of message dicts
+    intent: str           # "qa" or "chitchat"
+    response: str         # current response
 
 
 def receive_input(state):
@@ -43,7 +43,7 @@ def handle_chitchat(state):
     # response = llm.invoke([
     #     *state["history"],
     #     # {"role": "system", "content": "You're a witty assistant, keep it light and friendly."}
-    #     {"role": "system", "content": "You're a cheeky, fun assistantâ€”crack a joke or keep it playful, no stiff answers!"}
+    #     {"role": "system", "content": "You're a cheeky, fun assistant-€”crack a joke or keep it playful, no stiff answers!"}
     # ])
     last_msg = state["history"][-1]["content"]
     response = llm.invoke(

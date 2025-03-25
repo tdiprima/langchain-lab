@@ -4,6 +4,7 @@ from langchain.tools import tool
 from langchain_core.runnables import RunnableLambda
 from typing import TypedDict
 
+
 # --------- STEP 1: Define State Schema ---------
 class State(TypedDict):
     question: str
@@ -11,8 +12,10 @@ class State(TypedDict):
     calculation_result: str
     summary: str
 
+
 # --------- STEP 2: Define LLM ---------
 llm = ChatOpenAI(model="gpt-4", temperature=0)
+
 
 # --------- STEP 3: Define Nodes ---------
 
@@ -20,10 +23,12 @@ llm = ChatOpenAI(model="gpt-4", temperature=0)
 def receive_question(state: State) -> dict[str, str]:
     return {"question": "What's 24 * (365 + 1) + 42?"}  # simulate user input
 
+
 # 2. Think step
 def think_step(state: State) -> dict[str, str]:
     response = llm.invoke(f"User asked: {state['question']}. Think step-by-step.")
     return {"thought": response.content}
+
 
 # 3. Tool use (Calculator)
 @tool
@@ -42,6 +47,7 @@ def calculator(expr: str) -> str:
     except Exception as e:
         return f"Error: {e}"
 
+
 def use_calculator(state: State) -> dict[str, str]:
     # Extract expression using GPT
     extract_expr = llm.invoke(
@@ -49,6 +55,7 @@ def use_calculator(state: State) -> dict[str, str]:
     )
     result = calculator.invoke(extract_expr.content)
     return {"calculation_result": result}
+
 
 # 4. Summarize final answer
 def summarize(state: State) -> dict[str, str]:
@@ -59,6 +66,7 @@ def summarize(state: State) -> dict[str, str]:
         f"Summarize everything into a final answer."
     )
     return {"summary": summary.content}
+
 
 # --------- STEP 4: Build the Graph ---------
 # Build the graph
@@ -90,6 +98,6 @@ initial_state = {
     "summary": ""
 }
 
-# Run the graph
+# --------- STEP 5: Run It ---------
 result = graph.invoke(initial_state)
 print(result["summary"])
