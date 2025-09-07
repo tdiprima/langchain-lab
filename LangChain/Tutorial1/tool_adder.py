@@ -6,12 +6,14 @@ It successfully demonstrates:
 - Proper message handling and conversation flow
 Author: tdiprima
 """
-from langgraph.graph import StateGraph, END
+
+import json
+from typing import List, TypedDict
+
+from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
-from typing import TypedDict, List
-from langchain_core.messages import HumanMessage, AIMessage
-import json
+from langgraph.graph import END, StateGraph
 
 
 # Define a tool
@@ -40,24 +42,24 @@ def agent(state: State) -> State:
     messages = state["messages"]
     if isinstance(messages[-1], str):
         messages[-1] = HumanMessage(content=messages[-1])
-    
+
     print(f"\nProcessing message: {messages[-1].content}")
     response = llm.invoke(messages)
-    
+
     # Handle tool calls if present
-    if response.additional_kwargs.get('tool_calls'):
-        tool_call = response.additional_kwargs['tool_calls'][0]
-        tool_name = tool_call['function']['name']
-        tool_args = json.loads(tool_call['function']['arguments'])
-        
+    if response.additional_kwargs.get("tool_calls"):
+        tool_call = response.additional_kwargs["tool_calls"][0]
+        tool_name = tool_call["function"]["name"]
+        tool_args = json.loads(tool_call["function"]["arguments"])
+
         # Execute the tool
-        if tool_name == 'add_numbers':
+        if tool_name == "add_numbers":
             result = add_numbers.invoke(tool_args)
             # Add the tool result as a message
             messages.append(AIMessage(content=f"The result is {result}"))
     else:
         messages.append(response)
-    
+
     return state
 
 
@@ -72,7 +74,7 @@ print("\nStarting conversation with: Add 5 and 3")
 response = app.invoke(initial_state)
 print("\nFinal messages:")
 for msg in response["messages"]:
-    if hasattr(msg, 'content'):
+    if hasattr(msg, "content"):
         print(f"- {msg.content}")
     else:
         print(f"- {msg}")

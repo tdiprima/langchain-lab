@@ -2,6 +2,7 @@
 Create a simple chatbot that remembers previous messages in a conversation
 Author: tdiprima
 """
+
 from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
 

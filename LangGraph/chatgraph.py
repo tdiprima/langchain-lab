@@ -1,13 +1,14 @@
-from typing import TypedDict, List
-from langchain_openai import ChatOpenAI
-from langgraph.graph import StateGraph, END
+from typing import List, TypedDict
+
 from langchain_core.runnables import RunnableLambda
+from langchain_openai import ChatOpenAI
+from langgraph.graph import END, StateGraph
 
 
 class State(TypedDict, total=False):
-    history: List[dict]   # list of message dicts
-    intent: str           # "qa" or "chitchat"
-    response: str         # current response
+    history: List[dict]  # list of message dicts
+    intent: str  # "qa" or "chitchat"
+    response: str  # current response
 
 
 def receive_input(state):
@@ -24,10 +25,8 @@ llm = ChatOpenAI(model="gpt-4", temperature=0)
 def route_intent(state):
     history = state["history"]
     last_msg = history[-1]["content"]
-    decision = llm.invoke(
-        f"Classify this message as 'qa' or 'chitchat': {last_msg}"
-    )
-    intent = decision.content.strip().lower().replace("'", "").replace('"', '')
+    decision = llm.invoke(f"Classify this message as 'qa' or 'chitchat': {last_msg}")
+    intent = decision.content.strip().lower().replace("'", "").replace('"', "")
     print(f"Intent classified as: '{intent}'")  # Debug line
     return {"intent": intent}
 
@@ -43,11 +42,11 @@ def handle_chitchat(state):
     # response = llm.invoke([
     #     *state["history"],
     #     # {"role": "system", "content": "You're a witty assistant, keep it light and friendly."}
-    #     {"role": "system", "content": "You're a cheeky, fun assistant-€”crack a joke or keep it playful, no stiff answers!"}
+    #     {"role": "system", "content": "You're a cheeky, fun assistant-crack a joke or keep it playful, no stiff answers!"}
     # ])
     last_msg = state["history"][-1]["content"]
     response = llm.invoke(
-        f"Respond to '{last_msg}' with a short, witty quipâ€”keep it light, no boring AI clichÃ©s!"
+        f"Respond to '{last_msg}' with a short, witty quipâ€”keep it light, no boring AI cliches!"
     )
     return {"response": response.content}
 
@@ -74,18 +73,15 @@ def choose_path(state):
     return intent
 
 
-builder.add_conditional_edges("route", choose_path, {
-    "qa": "qa",
-    "chitchat": "chitchat"
-})
+builder.add_conditional_edges(
+    "route", choose_path, {"qa": "qa", "chitchat": "chitchat"}
+)
 
 builder.add_edge("qa", END)
 builder.add_edge("chitchat", END)
 
 graph = builder.compile()
 
-initial_state = {
-    "history": []
-}
+initial_state = {"history": []}
 result = graph.invoke(initial_state)
 print(result["response"])

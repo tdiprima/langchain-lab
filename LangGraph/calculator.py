@@ -2,9 +2,11 @@
 A Minimal "Calculator" Tool Using LangGraph
 Converted from LangChain example by tdiprima
 """
-from langgraph.graph import StateGraph, END
+
 from typing import TypedDict
+
 from langchain_openai import OpenAI
+from langgraph.graph import END, StateGraph
 
 
 # Define the state that will be maintained throughout the graph
@@ -27,7 +29,14 @@ def add_numbers(input_str: str) -> str:
 def tool_node(state: AgentState) -> AgentState:
     # Simple parsing to extract numbers from the input
     # In a more complex scenario, you might use an LLM to parse this
-    words = state["input"].lower().replace("what is", "").replace("plus", "").replace("?", "").strip()
+    words = (
+        state["input"]
+        .lower()
+        .replace("what is", "")
+        .replace("plus", "")
+        .replace("?", "")
+        .strip()
+    )
     result = add_numbers(words)
     return {"input": "", "output": result}
 

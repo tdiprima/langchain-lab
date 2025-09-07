@@ -1,8 +1,9 @@
-from langgraph.graph import StateGraph, END
-from langchain_openai import ChatOpenAI
+from typing import TypedDict
+
 from langchain.tools import tool
 from langchain_core.runnables import RunnableLambda
-from typing import TypedDict
+from langchain_openai import ChatOpenAI
+from langgraph.graph import END, StateGraph
 
 
 # --------- STEP 1: Define State Schema ---------
@@ -18,6 +19,7 @@ llm = ChatOpenAI(model="gpt-4", temperature=0)
 
 
 # --------- STEP 3: Define Nodes ---------
+
 
 # 1. Receive question
 def receive_question(state: State) -> dict[str, str]:
@@ -35,10 +37,10 @@ def think_step(state: State) -> dict[str, str]:
 def calculator(expr: str) -> str:
     """
     Evaluates a mathematical expression and returns the result as a string.
-    
+
     Args:
         expr (str): A string containing a valid mathematical expression to evaluate.
-        
+
     Returns:
         str: The result of the evaluated expression as a string, or an error message if evaluation fails.
     """
@@ -91,12 +93,7 @@ builder.set_entry_point("receive")
 graph = builder.compile()
 
 # Initialize with empty state values
-initial_state = {
-    "question": "",
-    "thought": "",
-    "calculation_result": "",
-    "summary": ""
-}
+initial_state = {"question": "", "thought": "", "calculation_result": "", "summary": ""}
 
 # --------- STEP 5: Run It ---------
 result = graph.invoke(initial_state)

@@ -5,19 +5,22 @@ Calls an external API tool to get real-time "spy network" updates.
 Dynamically reasons over the retrieved information before responding.
 Author: tdiprima
 """
+
 import os
+
+import requests
 from langchain.agents import initialize_agent
-from langchain_openai import ChatOpenAI
-from langchain_openai import OpenAIEmbeddings
+from langchain.tools import tool
 from langchain_community.vectorstores.faiss import FAISS
 from langchain_core.documents import Document
-from langchain.tools import tool
-import requests
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 # Load API key
 api_key = os.getenv("OPENAI_API_KEY")
 if api_key is None:
-    raise ValueError("OpenAI API key is not set. Please set the OPENAI_API_KEY environment variable.")
+    raise ValueError(
+        "OpenAI API key is not set. Please set the OPENAI_API_KEY environment variable."
+    )
 
 # Initialize LLM with reasoning capability
 llm = ChatOpenAI(model_name="gpt-4", temperature=0.7, api_key=api_key)
@@ -26,7 +29,9 @@ llm = ChatOpenAI(model_name="gpt-4", temperature=0.7, api_key=api_key)
 documents = [
     Document(page_content="The nuclear codes are hidden in the vault."),
     Document(page_content="Agent X was last seen in Paris."),
-    Document(page_content="The formula for the secret serum is stored on a secure server."),
+    Document(
+        page_content="The formula for the secret serum is stored on a secure server."
+    ),
 ]
 embeddings = OpenAIEmbeddings(api_key=api_key, model="text-embedding-ada-002")
 vector_db = FAISS.from_documents(documents, embeddings)
@@ -62,7 +67,7 @@ agent = initialize_agent(
     tools=[retrieve_intelligence, fetch_spy_network_update],
     llm=llm,
     agent="conversational-react-description",
-    verbose=True
+    verbose=True,
 )
 
 # Example query

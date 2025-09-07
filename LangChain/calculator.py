@@ -2,8 +2,8 @@
 A Minimal "Calculator" Tool Using LangChain
 Author: tdiprima
 """
-from langchain.agents import Tool, AgentType
-from langchain.agents import initialize_agent
+
+from langchain.agents import AgentType, Tool, initialize_agent
 from langchain_openai import OpenAI
 
 
@@ -20,7 +20,7 @@ tools = [
     Tool(
         name="Calculator",
         func=add_numbers,
-        description="Adds two numbers. E.g., '3 5' -> '8'"
+        description="Adds two numbers. E.g., '3 5' -> '8'",
     ),
 ]
 
@@ -29,10 +29,7 @@ llm = OpenAI(temperature=0)
 
 # Build the agent
 agent = initialize_agent(
-    tools=tools,
-    llm=llm,
-    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-    verbose=True
+    tools=tools, llm=llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True
 )
 
 # Use it

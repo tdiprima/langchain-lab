@@ -4,15 +4,16 @@ Clinical Symptom Analysis Tool with Diagnosis Hypothesis Generation
 Note: Requires OPENAI_API_KEY for LLM functionality
 Author: tdiprima
 """
-import os
-import requests
+
 import logging
+import os
+
+import requests
 from langchain.agents import initialize_agent
-from langchain_openai import ChatOpenAI
-from langchain_openai import OpenAIEmbeddings
+from langchain.tools import tool
 from langchain_community.vectorstores.faiss import FAISS
 from langchain_core.documents import Document
-from langchain.tools import tool
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -29,9 +30,15 @@ llm = ChatOpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=api_key)
 
 # Sample medical documents
 documents = [
-    Document(page_content="Common causes of excessive thirst include diabetes mellitus, dehydration, or hypercalcemia."),
-    Document(page_content="Fatigue and weight loss can indicate metabolic disorders such as diabetes or thyroid dysfunction."),
-    Document(page_content="Standard tests for unexplained weight loss include blood glucose, thyroid function tests, and kidney function tests.")
+    Document(
+        page_content="Common causes of excessive thirst include diabetes mellitus, dehydration, or hypercalcemia."
+    ),
+    Document(
+        page_content="Fatigue and weight loss can indicate metabolic disorders such as diabetes or thyroid dysfunction."
+    ),
+    Document(
+        page_content="Standard tests for unexplained weight loss include blood glucose, thyroid function tests, and kidney function tests."
+    ),
 ]
 embeddings = OpenAIEmbeddings(openai_api_key=api_key, model="text-embedding-ada-002")
 vector_db = FAISS.from_documents(documents, embeddings)
@@ -70,7 +77,7 @@ agent = initialize_agent(
     handle_parsing_errors=True,
     agent_kwargs={
         "system_message": "Always start by retrieving medical guidelines with `retrieve_medical_knowledge` before querying external APIs."
-    }
+    },
 )
 
 # Query

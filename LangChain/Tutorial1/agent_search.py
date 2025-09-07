@@ -2,7 +2,8 @@
 Agents: Agent with a Tool
 Creates an agent with a fake search tool.
 """
-from langchain.agents import initialize_agent, Tool
+
+from langchain.agents import Tool, initialize_agent
 from langchain_openai import ChatOpenAI
 
 
@@ -19,4 +20,4 @@ agent = initialize_agent(tools, llm, agent_type="zero-shot-react-description")
 
 # Ask it something
 response = agent.invoke({"input": "Tell me about cats!"})
-print(response['output'])  # Cats are both interesting and awesome animals!
+print(response["output"])  # Cats are both interesting and awesome animals!

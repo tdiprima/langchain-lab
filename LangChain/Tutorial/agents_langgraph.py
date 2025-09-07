@@ -2,8 +2,9 @@
 Same thing, but using LangGraph
 Author: tdiprima
 """
-from langchain_openai import ChatOpenAI
+
 from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
 
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")

@@ -1,6 +1,6 @@
-from langgraph.graph import StateGraph, END
 from langchain_core.runnables import RunnableLambda
 from langchain_openai import ChatOpenAI
+from langgraph.graph import END, StateGraph
 from pydantic import BaseModel
 
 
@@ -16,7 +16,9 @@ llm = ChatOpenAI(model="gpt-4", temperature=0)
 
 # Node 1: Ask a question (simulate user input)
 def ask_question(state: State) -> State:
-    return State(input="What's your favorite programming language?", answer=state.answer)
+    return State(
+        input="What's your favorite programming language?", answer=state.answer
+    )
 
 
 # Node 2: Analyze the answer with GPT

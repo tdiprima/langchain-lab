@@ -2,6 +2,7 @@
 Llama3 Fact-Generating Agent
 Author: tdiprima
 """
+
 from langchain_ollama import OllamaLLM
 
 # Initialize Llama3 using Ollama locally

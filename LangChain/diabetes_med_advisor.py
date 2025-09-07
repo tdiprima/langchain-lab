@@ -4,7 +4,9 @@ No LangChain libraries; linear, non-agentic script.
 Note: Requires SERPAPI_API_KEY and OPENAI_API_KEY
 Author: tdiprima
 """
+
 import os
+
 import requests
 
 # Load API keys from environment variables
@@ -12,7 +14,9 @@ SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 if not SERPAPI_API_KEY or not OPENAI_API_KEY:
-    raise ValueError("Missing SERPAPI_API_KEY or OPENAI_API_KEY in environment variables.")
+    raise ValueError(
+        "Missing SERPAPI_API_KEY or OPENAI_API_KEY in environment variables."
+    )
 
 
 # Function to fetch medical guidelines via SerpAPI
@@ -23,14 +27,16 @@ def retrieve_medical_guidelines(query):
         "q": query,
         "api_key": SERPAPI_API_KEY,
         "engine": "google",
-        "num": 5  # Limit to 5 results for brevity
+        "num": 5,  # Limit to 5 results for brevity
     }
     try:
         response = requests.get(url, params=params)
         response.raise_for_status()
         results = response.json().get("organic_results", [])
         # Extract snippets from top results
-        guidelines = [result.get("snippet", "No snippet available") for result in results]
+        guidelines = [
+            result.get("snippet", "No snippet available") for result in results
+        ]
         return "\n".join(guidelines) if guidelines else "No guidelines found."
     except requests.RequestException as e:
         print(f"SerpAPI error: {e}")
@@ -45,7 +51,9 @@ def check_drug_contraindications(medication, condition):
         response = requests.get(url)
         response.raise_for_status()
         data = response.json()
-        warnings = data.get("results", [{}])[0].get("warnings", ["No warnings found."])[0]
+        warnings = data.get("results", [{}])[0].get("warnings", ["No warnings found."])[
+            0
+        ]
         return warnings
     except requests.RequestException as e:
         print(f"FDA API error: {e}")
@@ -58,16 +66,19 @@ def generate_response(prompt):
     url = "https://api.openai.com/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {OPENAI_API_KEY}",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
     }
     payload = {
         "model": "gpt-4",
         "messages": [
-            {"role": "system", "content": "You are a medical assistant providing medication recommendations."},
-            {"role": "user", "content": prompt}
+            {
+                "role": "system",
+                "content": "You are a medical assistant providing medication recommendations.",
+            },
+            {"role": "user", "content": prompt},
         ],
         "temperature": 0,
-        "max_tokens": 500
+        "max_tokens": 500,
     }
     try:
         response = requests.post(url, headers=headers, json=payload)

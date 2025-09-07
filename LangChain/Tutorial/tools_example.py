@@ -2,14 +2,15 @@
 AI Agent that uses tools to answer questions
 Author: tdiprima
 """
+
 import warnings
+from datetime import datetime
+
+from langchain.agents import AgentType, initialize_agent
+from langchain_core.tools import Tool
+from langchain_openai import OpenAI
 
 warnings.filterwarnings("ignore")  # Suppress warnings for cleaner output
-
-from langchain_openai import OpenAI
-from langchain.agents import initialize_agent, AgentType
-from langchain_core.tools import Tool
-from datetime import datetime
 
 
 # Define the current time tool
@@ -23,7 +24,7 @@ tools = [
     Tool(
         name="Current Time",
         func=get_current_time,
-        description="Get the current time in HH:MM:SS format"
+        description="Get the current time in HH:MM:SS format",
     )
 ]
 
@@ -32,10 +33,7 @@ llm = OpenAI(temperature=0)
 
 # Initialize the agent
 agent = initialize_agent(
-    tools=tools,
-    llm=llm,
-    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-    verbose=True
+    tools=tools, llm=llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True
 )
 
 # Ask the agent a question that requires the tool

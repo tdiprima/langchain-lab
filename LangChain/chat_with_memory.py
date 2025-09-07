@@ -3,13 +3,15 @@ Uses LangChain's memory to maintain chat history.
 Implements a conversational AI that persists history across sessions.
 Author: tdiprima
 """
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.runnables.history import RunnableWithMessageHistory
-from langchain_community.chat_message_histories import ChatMessageHistory
-from langchain_core.chat_history import BaseChatMessageHistory
 
 import os
+
+from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain_core.chat_history import BaseChatMessageHistory
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_openai import ChatOpenAI
+
 api_key = os.getenv("OPENAI_API_KEY")
 
 # Store for chat histories (in-memory for this example)
@@ -26,25 +28,30 @@ def get_session_history(session_id: str) -> BaseChatMessageHistory:
 def create_conversation():
     # Initialize the language model
     llm = ChatOpenAI(temperature=0.7)
-    
+
     # Create a custom prompt template
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are a helpful AI assistant with knowledge up to March 2025."),
-        MessagesPlaceholder(variable_name="history"),
-        ("human", "{input}")
-    ])
-    
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "system",
+                "You are a helpful AI assistant with knowledge up to March 2025.",
+            ),
+            MessagesPlaceholder(variable_name="history"),
+            ("human", "{input}"),
+        ]
+    )
+
     # Create the runnable chain with history
     chain = prompt | llm
-    
+
     # Wrap the chain with message history
     conversation = RunnableWithMessageHistory(
         chain,
         get_session_history,
         input_messages_key="input",
-        history_messages_key="history"
+        history_messages_key="history",
     )
-    
+
     return conversation
 
 
@@ -52,18 +59,17 @@ def main():
     # Create the conversation instance
     convo = create_conversation()
     session_id = "user_session"  # Simple session ID for this example
-    
+
     # Example conversation loop
     print("Start chatting! Type 'quit' to exit.")
     while True:
         user_input = input("You: ")
-        if user_input.lower() == 'quit':
+        if user_input.lower() == "quit":
             break
-            
+
         # Invoke the conversation with the input and session ID
         response = convo.invoke(
-            {"input": user_input},
-            config={"configurable": {"session_id": session_id}}
+            {"input": user_input}, config={"configurable": {"session_id": session_id}}
         )
         print(f"AI: {response.content}")
 
